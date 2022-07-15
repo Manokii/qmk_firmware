@@ -51,5 +51,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_ANIMATIONS
 //#define RGBLIGHT_EFFECT_RAINBOW_MOOD
 #define RGBLIGHT_DEFAULT_MODE RGBLIGHT_MODE_RAINBOW_MOOD
-
-
