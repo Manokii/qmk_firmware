@@ -68,7 +68,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   `-------------------''-------'           '------''--------------------'
  */
 [_LOWER] = LAYOUT(
-  _______, _______, _______, _______, _______, _______,                   LC_PSCR, KC_LPRN, KC_RPRN, KC_LPRN, KC_RPRN, KC_SPC,
+  _______, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,                      KC_PSCR, KC_LPRN, KC_RPRN, KC_LPRN, KC_RPRN, KC_SPC,
   _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______,                   _______, KC_GRV, KC_UP, KC_LCBR, KC_RCBR, KC_GT,
   _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______,                   KC_GRV, KC_LEFT, KC_DOWN, KC_RGHT, _______, KC_PIPE,
   _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, KC_MPLY, KC_MNXT, KC_LCBR, KC_RCBR, KC_PLUS, KC_LBRC, KC_RBRC, KC_PIPE,
@@ -121,7 +121,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 #ifdef OLED_ENABLE
-
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
   if (!is_keyboard_master())
     return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
@@ -189,6 +188,7 @@ const char *read_keylogs(void) {
 bool oled_task_user(void) {
   if (is_keyboard_master()) {
     // Host Keyboard Layer Status
+
     oled_write_P(PSTR("Layer: "), false);
 
     switch (get_highest_layer(layer_state)) {
@@ -209,8 +209,9 @@ bool oled_task_user(void) {
     }
 
     oled_write_ln(read_keylog(), false);
-    oled_write_ln(read_keylogs(), false);
-
+    oled_write_ln(" ", false);
+    oled_write_ln("jasper@manok.dev", false);
+    // oled_write_ln(read_keylogs(), false);
   } else {
       render_logo();
   }
@@ -218,12 +219,11 @@ bool oled_task_user(void) {
 }
 #endif // OLED_DRIVER_ENABLE
 
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
-#ifdef OLED_DRIVER_ENABLE
-    set_keylog(keycode, record);
-#endif
+    #ifdef OLED_ENABLE
+      set_keylog(keycode, record);
+    #endif
     // set_timelog();
   }
   return true;
